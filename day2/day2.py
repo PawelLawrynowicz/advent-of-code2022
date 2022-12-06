@@ -10,6 +10,32 @@ shapes = {
     "Scissors": 'Z'
 }
 
+commands = {
+    "lose": 'X',
+    "draw": 'Y',
+    "win": 'Z'
+}
+
+
+def chooseShape(op, us):
+    op = chr(ord(op)+23)
+    if us == commands["lose"]:
+        if op == shapes["Rock"]:
+            return shapes["Scissors"]
+        elif op == shapes["Paper"]:
+            return shapes["Rock"]
+        elif op == shapes["Scissors"]:
+            return shapes["Paper"]
+    elif us == commands["draw"]:
+        return op
+    elif us == commands["win"]:
+        if op == shapes["Rock"]:
+            return shapes["Paper"]
+        elif op == shapes["Paper"]:
+            return shapes["Scissors"]
+        elif op == shapes["Scissors"]:
+            return shapes["Rock"]
+
 
 def gameOutcome(op, us):
     op = chr(ord(op) + 23)
@@ -30,7 +56,8 @@ with open("day2/input") as f:
     games = f.readlines()
     for game in games:
         opponent = game[0]
-        user = game[2]
-        points += shapePoints[user]
-        points += gameOutcome(opponent, user)
+        userMode = game[2]
+        userChoice = chooseShape(opponent, userMode)
+        points += shapePoints[userChoice]
+        points += gameOutcome(opponent, userChoice)
 print(points)
