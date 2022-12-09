@@ -34,13 +34,23 @@ def gen_commands(text):
     return commands
 
 
-def move_crates(stacks, commands):
+def move_crates_single_at_once(stacks, commands):
     for command in commands:
         crates_to_move = command[0]
         from_stack = command[1] - 1
         to_stack = command[2] - 1
         for i in range(crates_to_move):
             stacks[to_stack].append(stacks[from_stack].pop())
+    return stacks
+
+
+def move_crates_multiple_at_once(stacks, commands):
+    for command in commands:
+        crates_to_move = command[0]
+        from_stack = command[1] - 1
+        to_stack = command[2] - 1
+        stacks[to_stack].extend(stacks[from_stack][-crates_to_move:])
+        del stacks[from_stack][-crates_to_move:]
     return stacks
 
 
@@ -57,6 +67,6 @@ if __name__ == "__main__":
     text = file.readlines()
     stacks = gen_stacks(text)
     commands = gen_commands(text)
-    result = move_crates(stacks, commands)
+    result = move_crates_multiple_at_once(stacks, commands)
     rearranged_crates = get_top_crates(result)
     print(get_top_crates(rearranged_crates))
