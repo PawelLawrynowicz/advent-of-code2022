@@ -7,6 +7,6 @@ def find_n_unique(path, n):
 
 
 if __name__ == "__main__":
-    PATH = "day6/input"
-    message_start = find_n_unique(PATH, 4)
+    PATH = "day6/test_input"
+    message_start = find_n_unique(PATH, 14)
     print(message_start)
